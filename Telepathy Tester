@@ -1,0 +1,38 @@
+const int knob1Pin = A0; 
+const int knob2Pin = A1; 
+const int redLed1Pin = 12; 
+const int greenLed1Pin = 10; 
+const int redLed2Pin = 5; 
+const int greenLed2Pin = 2; 
+const int blueLedPin = 7; 
+
+void setup() {
+  pinMode(redLed1Pin, OUTPUT);
+  pinMode(greenLed1Pin, OUTPUT);
+  pinMode(redLed2Pin, OUTPUT);
+  pinMode(greenLed2Pin, OUTPUT);
+  pinMode(blueLedPin, OUTPUT);
+}
+
+void loop() {
+  int knob1Value = analogRead(knob1Pin);
+  int knob2Value = analogRead(knob2Pin);
+
+  // Adjust the threshold to ensure that the LED comes on only when the knob is turned to the extreme positions
+  bool red1 = knob1Value > 900; 
+  bool green1 = knob1Value < 123; 
+  bool red2 = knob2Value > 900; 
+  bool green2 = knob2Value < 123; 
+
+  digitalWrite(redLed1Pin, red1 ? HIGH : LOW);
+  digitalWrite(greenLed1Pin, green1 ? HIGH : LOW);
+  digitalWrite(redLed2Pin, red2 ? HIGH : LOW);
+  digitalWrite(greenLed2Pin, green2 ? HIGH : LOW);
+
+  // If both users select the same color, the blue LED lights up
+  if ((red1 && red2) || (green1 && green2)) {
+    digitalWrite(blueLedPin, HIGH);
+  } else {
+    digitalWrite(blueLedPin, LOW);
+  }
+}
